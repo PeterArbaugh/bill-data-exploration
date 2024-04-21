@@ -1,14 +1,8 @@
-import os
 import streamlit as st
 import pandas as pd
 from openai import OpenAI
-from dotenv import load_dotenv
 from streamlit_extras.stylable_container import stylable_container
 import hmac
-
-load_dotenv()
-
-PASSWORD = os.environ.get('PASSWORD')
 
 def check_password():
     """Returns `True` if the user had a correct password."""
@@ -48,7 +42,9 @@ def check_password():
 if not check_password():
     st.stop()
 
-client = OpenAI()
+client = OpenAI(
+    api_key=st.secrets.OPENAI_API_KEY
+)
 
 df = pd.read_csv('house_df.csv')
 
